@@ -6,7 +6,9 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				brand: '#0C0D3B',
+				blue: '#0C0D3B',
+				green: '#659B5E',
+				coral: '#EE6055',
 			},
 			fontFamily: {
 				sans: [
@@ -29,5 +31,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require('@tailwindcss/forms')],
 };
