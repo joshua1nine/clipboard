@@ -9,6 +9,7 @@ import { HiCog } from 'react-icons/hi';
 import Link from 'next/link';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
+import { applyFilters } from '../lib/applyFilters';
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const resources = await getClient().fetch(getAllResources);
@@ -25,13 +26,15 @@ interface Props {
 }
 
 const Home = ({ resources }: Props) => {
-	const [typeFilter, setTypeFilter] = useState('');
+	// const [typeFilter, setTypeFilter] = useState('');
+	// const filteredResources = resources.filter((resource: any) => {
+	// 	return resource.type.includes(typeFilter);
+	// });
+	// const searchItems = typeFilter ? filteredResources : resources;
 
-	const filteredResources = resources.filter((resource: any) => {
-		return resource.type.includes(typeFilter);
-	});
+	const [filters, setfilters] = useState({ type: 'ELA', tags: ['Pre-K'] });
 
-	const searchItems = typeFilter ? filteredResources : resources;
+	const searchItems = applyFilters(resources, filters);
 
 	const [query, setQuery] = useState('');
 	const fuse = new Fuse(searchItems, {
