@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+.rdp-months {
+	justify-content: center;
+}
+
+:root {
+	--rdp-cell-size: 40px;
+	--rdp-accent-color: #ee6055;
+	--rdp-background-color: #e7edff;
+	/* Switch to dark colors for dark themes */
+	--rdp-accent-color-dark: #ee6055;
+	--rdp-background-color-dark: hsl(252, 96%, 22%);
+	/* Outline border for focused elements */
+	--rdp-outline: 2px solid var(--rdp-accent-color);
+	/* Outline border for focused and selected elements */
+	--rdp-outline-selected: 2px solid hsl(4, 82%, 75%);
+}
+
 body,
 html {
 	@apply text-blue;
