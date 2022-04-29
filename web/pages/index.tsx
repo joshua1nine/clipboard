@@ -32,7 +32,10 @@ const Home = ({ resources }: Props) => {
 	// });
 	// const searchItems = typeFilter ? filteredResources : resources;
 
-	const [filters, setfilters] = useState({ type: 'ELA', tags: ['Pre-K'] });
+	const [filters, setfilters] = useState({
+		type: 'ELA',
+		tags: ['Kindergarten'],
+	});
 
 	const searchItems = applyFilters(resources, filters);
 

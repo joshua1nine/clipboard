@@ -5,6 +5,7 @@ export const getAllResources = groq`*[_type == 'resource']{
 	mainImage,
 	title,
 	'slug': slug.current,
+	tags
 }`;
 
 export const getResource = groq`*[_type == 'resource' && slug.current == $slug][0]{
