@@ -25,7 +25,7 @@ interface Props {
 }
 
 const Home = ({ resources }: Props) => {
-	const [typeFilter, setTypeFilter] = useState('STEM');
+	const [typeFilter, setTypeFilter] = useState('');
 
 	const filteredResources = resources.filter((resource: any) => {
 		return resource.type.includes(typeFilter);
