@@ -26,20 +26,14 @@ interface Props {
 }
 
 const Home = ({ resources }: Props) => {
-	// const [typeFilter, setTypeFilter] = useState('');
-	// const filteredResources = resources.filter((resource: any) => {
-	// 	return resource.type.includes(typeFilter);
-	// });
-	// const searchItems = typeFilter ? filteredResources : resources;
-
 	const [filters, setfilters] = useState({
 		type: 'ELA',
 		tags: ['Kindergarten'],
 	});
+	const [query, setQuery] = useState('');
 
 	const searchItems = applyFilters(resources, filters);
 
-	const [query, setQuery] = useState('');
 	const fuse = new Fuse(searchItems, {
 		keys: ['title', 'tags', 'type'],
 	});
