@@ -3,9 +3,16 @@ import { HiChevronDown } from 'react-icons/hi';
 interface Props {
 	query: string;
 	handleOnSearch: any;
+	setToggleFilter: any;
+	toggleFilter: any;
 }
 
-export const SearchBar = ({ query, handleOnSearch }: Props) => {
+export const SearchBar = ({
+	query,
+	handleOnSearch,
+	setToggleFilter,
+	toggleFilter,
+}: Props) => {
 	return (
 		<nav className='flex justify-between border-t border-b border-blue space-x-2 p-2 mb-2'>
 			<input
@@ -16,9 +23,15 @@ export const SearchBar = ({ query, handleOnSearch }: Props) => {
 				onChange={handleOnSearch}
 				placeholder='Search...'
 			/>
-			<div className='flex justify-center items-center space-x-2 px-4'>
+			<div
+				className='flex justify-center items-center space-x-2 px-4 cursor-pointer'
+				onClick={() => setToggleFilter(!toggleFilter)}>
 				<button type='button'>Filters</button>
-				<HiChevronDown />
+				<HiChevronDown
+					className={`transition-transform ease-in-out ${
+						toggleFilter && 'rotate-180'
+					}`}
+				/>
 			</div>
 		</nav>
 	);

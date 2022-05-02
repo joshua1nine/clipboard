@@ -1,8 +1,7 @@
-import type { NextPage } from 'next';
 import { Card } from '../components/Card';
 import { getClient } from '../lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { getAllResources } from '../lib/queries';
+import { getAllResources, getAllTags } from '../lib/queries';
 import { urlFor } from '../lib/sanity';
 import { SearchBar } from '../components/SearchBar';
 import { HiCog } from 'react-icons/hi';
@@ -10,27 +9,31 @@ import Link from 'next/link';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
 import { applyFilters } from '../lib/applyFilters';
+import { FilterOverlay } from '../components/FilterOverlay';
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const resources = await getClient().fetch(getAllResources);
+	const tags = await getClient().fetch(getAllTags);
 
 	return {
 		props: {
 			resources,
+			tags,
 		},
 	};
 };
 
 interface Props {
 	resources: any;
+	tags: any;
 }
 
-const Home = ({ resources }: Props) => {
-	const [filters, setfilters] = useState({
-		type: 'ELA',
-		tags: ['Kindergarten'],
-	});
+const Home = ({ resources, tags }: Props) => {
+	const [filters, setFilters] = useState({ type: 'none', tags: [] });
+	const [toggleFilter, setToggleFilter] = useState(false);
 	const [query, setQuery] = useState('');
+
+	console.log(resources);
 
 	const searchItems = applyFilters(resources, filters);
 
@@ -51,7 +54,7 @@ const Home = ({ resources }: Props) => {
 
 	return (
 		<div className='page'>
-			<main>
+			<main className='max-w-4xl mx-auto relative'>
 				<header className='p-3 mb-1 flex justify-between items-center'>
 					<h1 className='font-bold text-3xl'>SECC Resources</h1>
 					<Link href='/reservations'>
@@ -60,8 +63,21 @@ const Home = ({ resources }: Props) => {
 						</a>
 					</Link>
 				</header>
-				<SearchBar query={query} handleOnSearch={handleOnSearch} />
-				<section className='p-3'>
+				<SearchBar
+					query={query}
+					handleOnSearch={handleOnSearch}
+					setToggleFilter={setToggleFilter}
+					toggleFilter={toggleFilter}
+				/>
+				{toggleFilter && (
+					<FilterOverlay
+						filters={filters}
+						setFilters={setFilters}
+						setToggleFilter={setToggleFilter}
+						tags={tags}
+					/>
+				)}
+				<section className='p-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
 					{searchResults?.map((resource: any) => {
 						return (
 							<Card

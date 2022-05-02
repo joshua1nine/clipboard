@@ -15,6 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const reservations = await getClient().fetch(findReservations, {
 		resource_id: id,
 	});
+
 	return {
 		props: {
 			resource,
@@ -29,9 +30,17 @@ interface Props {
 }
 
 const Resource = ({ resource, reservations }: Props) => {
-	const { title, tags, mainImage } = resource;
 	const router = useRouter();
+	const { title, tags, mainImage } = resource;
 	const [range, setRange] = useState<DateRange | undefined>();
+
+	const disabledDays = reservations?.dates?.map((date: any) => ({
+		from: new Date(date.from.split('-').join(', ')),
+		to: new Date(date.to.split('-').join(', ')),
+	}));
+
+	console.log(disabledDays);
+
 	let footer = <p>Please pick the first day.</p>;
 	if (range?.from) {
 		if (!range.to) {
@@ -46,7 +55,7 @@ const Resource = ({ resource, reservations }: Props) => {
 	}
 
 	return (
-		<main className='p-4'>
+		<main className='p-4 max-w-4xl mx-auto'>
 			<header className='mb-6'>
 				<div className='flex items-center space-x-2'>
 					<HiChevronLeft />
@@ -56,52 +65,54 @@ const Resource = ({ resource, reservations }: Props) => {
 				</div>
 			</header>
 			<h1 className='text-3xl font-bold mb-4'>{title}</h1>
-			<div className={`relative aspect-[4/3] shadow-lg border border-blue`}>
-				<Image
-					src={urlFor(mainImage).url()}
-					layout='fill'
-					objectFit='cover'
-					priority
-				/>
+			<div className='res-grid'>
+				<div>
+					<div className={`relative aspect-[4/3] shadow-lg border border-blue`}>
+						<Image
+							src={urlFor(mainImage).url()}
+							layout='fill'
+							objectFit='cover'
+							priority
+						/>
+					</div>
+					<div className='my-2 space-x-1'>
+						{tags?.map((tag: string, index: number) => {
+							return (
+								<span
+									key={index}
+									className='text-white text-sm py-1 px-2 bg-blue rounded-md'>
+									{tag}
+								</span>
+							);
+						})}
+					</div>
+					<p className='mb-10'>Available Now</p>
+				</div>
+				<div>
+					<DayPicker
+						mode='range'
+						selected={range}
+						footer={footer}
+						onSelect={setRange}
+						disabled={disabledDays}
+					/>
+					<form className='space-y-3'>
+						<label htmlFor='name' className='flex flex-col'>
+							<span>Name</span>
+							<input type='text' name='name' />
+						</label>
+						<label htmlFor='email' className='flex flex-col'>
+							<span>Email</span>
+							<input type='text' name='email' />
+						</label>
+						<input
+							type='submit'
+							value='Submit'
+							className='text-white py-3 px-5 bg-blue rounded-md'
+						/>
+					</form>
+				</div>
 			</div>
-			<div className='my-2 space-x-1'>
-				{tags?.map((tag: string, index: number) => {
-					return (
-						<span
-							key={index}
-							className='text-white text-sm py-1 px-2 bg-blue rounded-md'>
-							{tag}
-						</span>
-					);
-				})}
-			</div>
-			<p className='mb-10'>Available Now</p>
-			<h2 className='text-2xl font-bold mb-6'>Reserve</h2>
-			<DayPicker
-				mode='range'
-				selected={range}
-				footer={footer}
-				onSelect={setRange}
-			/>
-			<form className='space-y-3'>
-				{/* <label htmlFor='from' className='flex flex-col'>
-					<span>From</span>
-					<input type='text' name='from' value={range?.from} />
-				</label> */}
-				<label htmlFor='name' className='flex flex-col'>
-					<span>Name</span>
-					<input type='text' name='name' />
-				</label>
-				<label htmlFor='email' className='flex flex-col'>
-					<span>Email</span>
-					<input type='text' name='email' />
-				</label>
-				<input
-					type='submit'
-					value='Submit'
-					className='text-white py-3 px-5 bg-blue rounded-md'
-				/>
-			</form>
 		</main>
 	);
 };

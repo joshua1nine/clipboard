@@ -30,7 +30,30 @@ export default {
 			name: 'dates',
 			title: 'Dates',
 			type: 'array',
-			of: [{ type: 'date' }],
+			of: [
+				{
+					name: 'dates',
+					title: 'Reservation Dates',
+					type: 'object',
+					fields: [
+						{
+							name: 'from',
+							type: 'date',
+							options: { dateFormat: 'YYYY, MM, DD' },
+						},
+						{
+							name: 'to',
+							type: 'date',
+							options: { dateFormat: 'YYYY, MM, DD' },
+						},
+					],
+				},
+			],
 		},
 	],
+	preview: {
+		select: {
+			title: 'teacher.name',
+		},
+	},
 };

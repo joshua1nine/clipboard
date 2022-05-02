@@ -35,7 +35,7 @@ export default {
 			name: 'tags',
 			title: 'Tags',
 			type: 'array',
-			of: [{ type: 'string' }],
+			of: [{ type: 'reference', to: [{ type: 'tags' }] }],
 		},
 		{
 			name: 'quantity',
@@ -46,7 +46,25 @@ export default {
 			name: 'reservations',
 			title: 'Reservations',
 			type: 'array',
-			of: [{ type: 'date' }],
+			of: [
+				{
+					name: 'dates',
+					title: 'Reservation Dates',
+					type: 'object',
+					fields: [
+						{
+							name: 'from',
+							type: 'date',
+							options: { dateFormat: 'YYYY, MM, DD' },
+						},
+						{
+							name: 'to',
+							type: 'date',
+							options: { dateFormat: 'YYYY, MM, DD' },
+						},
+					],
+				},
+			],
 		},
 	],
 };

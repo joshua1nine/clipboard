@@ -24,9 +24,12 @@ interface Props {
 const Reservations = ({ reservations }: Props) => {
 	const router = useRouter();
 	const [query, setQuery] = useState('');
+	const [toggleFilter, setToggleFilter] = useState(false);
 	const fuse = new Fuse(reservations, {
 		keys: ['resource', 'teacher.name', 'type'],
 	});
+
+	console.log(reservations[0].dates);
 
 	const results = fuse.search(query);
 	const searchResults = query
@@ -39,7 +42,7 @@ const Reservations = ({ reservations }: Props) => {
 	};
 	return (
 		<div className='page'>
-			<main>
+			<main className='max-w-4xl mx-auto'>
 				<header className='p-3 mb-1'>
 					<div className='flex items-center space-x-2 mb-3'>
 						<HiChevronLeft />
@@ -49,7 +52,12 @@ const Reservations = ({ reservations }: Props) => {
 					</div>
 					<h1 className='font-bold text-3xl'>Reservations</h1>
 				</header>
-				<SearchBar query={query} handleOnSearch={handleOnSearch} />
+				<SearchBar
+					query={query}
+					handleOnSearch={handleOnSearch}
+					setToggleFilter={setToggleFilter}
+					toggleFilter={toggleFilter}
+				/>
 				<section className='p-3 space-y-4'>
 					{searchResults?.map((reservation: any) => {
 						const { _id, teacher, resource, dates, type } = reservation;
@@ -61,7 +69,9 @@ const Reservations = ({ reservations }: Props) => {
 								}`}>
 								<p>{teacher.name}</p>
 								<p className='font-semibold'>{resource}</p>
-								<p>{dates[0]}</p>
+								<p>
+									{dates[0].from} - {dates[0].to}
+								</p>
 							</div>
 						);
 					})}

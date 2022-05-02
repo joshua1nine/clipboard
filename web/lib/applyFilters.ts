@@ -1,17 +1,19 @@
 export const applyFilters = (data: any, filters: any) => {
-	if (filters.type && filters.tags) {
+	if (filters?.type != 'none' && filters?.tags?.length > 0) {
+		console.log('and');
 		const filtered = data.filter((item: any) => {
 			return (
-				item.type.includes(filters.type) &&
-				item.tags.some((tag) => filters.tags.includes(tag))
+				item?.type?.includes(filters?.type) &&
+				item?.tags?.some((tag: any) => filters?.tags.includes(tag))
 			);
 		});
 		return filtered;
-	} else if (filters.type || filters.tags) {
-		const filtered = data.filter((item: any) => {
+	} else if (filters.type != 'none' || filters?.tags?.length > 0) {
+		console.log('or');
+		const filtered = data?.filter((item: any) => {
 			return (
-				item.type.includes(filters.type) ||
-				item.tags.some((tag) => filters.tags.includes(tag))
+				item?.type?.includes(filters.type) ||
+				item?.tags?.some((tag: any) => filters?.tags?.includes(tag))
 			);
 		});
 		return filtered;

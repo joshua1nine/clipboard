@@ -5,7 +5,12 @@ export const getAllResources = groq`*[_type == 'resource']{
 	mainImage,
 	title,
 	'slug': slug.current,
-	tags
+	'tags': tags[]->tag
+}`;
+
+export const getAllTags = groq`*[_type == 'tags']{
+  _id,
+  tag
 }`;
 
 export const getResource = groq`*[_type == 'resource' && slug.current == $slug][0]{
@@ -13,11 +18,12 @@ export const getResource = groq`*[_type == 'resource' && slug.current == $slug][
   mainImage,
   type,
   quantity,
-  tags,
-  _id
+  'tags': tags[]->tag,
+  _id,
+	reservations
 }`;
 
-export const findReservations = groq`*[_type == 'reservation' && resource->_id == $resource_id]{
+export const findReservations = groq`*[_type == 'reservation' && resource->_id == $resource_id][0]{
   dates,
 }`;
 

@@ -7,6 +7,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type';
 // We import object and document schemas
 import resource from './resource';
 import reservation from './reservation';
+import tags from './tags';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -19,5 +20,6 @@ export default createSchema({
 		// in the studio.
 		resource,
 		reservation,
+		tags,
 	]),
 });
