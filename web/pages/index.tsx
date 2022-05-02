@@ -56,7 +56,7 @@ const Home = ({ resources, tags }: Props) => {
 		<div className='page'>
 			<main className='max-w-4xl mx-auto relative'>
 				<header className='p-3 mb-1 flex justify-between items-center'>
-					<h1 className='font-bold text-3xl'>SECC Clipboard</h1>
+					<h1 className='font-bold text-3xl'>Clipboard</h1>
 					<Link href='/reservations'>
 						<a>
 							<HiCog size={30} className='text-blue' />
