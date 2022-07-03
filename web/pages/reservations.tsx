@@ -29,8 +29,6 @@ const Reservations = ({ reservations }: Props) => {
 		keys: ['resource', 'teacher.name', 'type'],
 	});
 
-	console.log(reservations[0].dates);
-
 	const results = fuse.search(query);
 	const searchResults = query
 		? results.map((result: any) => result.item)

@@ -39,8 +39,6 @@ const Resource = ({ resource, reservations }: Props) => {
 		to: new Date(date.to.split('-').join(', ')),
 	}));
 
-	console.log(disabledDays);
-
 	let footer = <p>Please pick the first day.</p>;
 	if (range?.from) {
 		if (!range.to) {

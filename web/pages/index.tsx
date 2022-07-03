@@ -33,8 +33,6 @@ const Home = ({ resources, tags }: Props) => {
 	const [toggleFilter, setToggleFilter] = useState(false);
 	const [query, setQuery] = useState('');
 
-	console.log(resources);
-
 	const searchItems = applyFilters(resources, filters);
 
 	const fuse = new Fuse(searchItems, {

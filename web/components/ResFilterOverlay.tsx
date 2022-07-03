@@ -16,8 +16,6 @@ export const FilterOverlay = ({
 	const [typeFilter, setTypeFilter] = useState(filters.type);
 	const [tagsFilter, setTagsFilter] = useState<any>(filters.tags);
 
-	console.log(tagsFilter);
-
 	const handelSubmit = (e: any) => {
 		e.preventDefault();
 		setFilters((currentValue: any) => ({
