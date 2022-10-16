@@ -81,7 +81,7 @@ export const FilterOverlay = ({
 						</label>
 					</div>
 				</div>
-				<div>
+				{/* <div>
 					<h2 className='text-base mb-2'>Availability:</h2>
 					<div className='flex gap-4 w-full mb-3'>
 						<label className='filter-btn flex-1'>
@@ -109,7 +109,7 @@ export const FilterOverlay = ({
 							</span>
 						</label>
 					</div>
-				</div>
+				</div> */}
 				<div>
 					<h2 className='text-base mb-2'>Tags:</h2>
 					<div className='flex flex-wrap gap-2 w-full mb-3'>

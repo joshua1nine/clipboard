@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { HiChevronLeft } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
-import { DateRange, DayPicker } from 'react-day-picker';
+import { DayPicker } from 'react-day-picker';
 import { useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -30,16 +30,21 @@ interface Props {
 }
 
 const Resource = ({ resource, reservations }: Props) => {
+	// State
 	const router = useRouter();
-	const { title, tags, mainImage } = resource;
-	const [range, setRange] = useState<DateRange | undefined>();
+	const { title, tags, mainImage, _id } = resource;
+	const [range, setRange] = useState<any>();
+	const [name, setName] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
 
+	// Date Picker Options
 	const disabledDays = reservations?.dates?.map((date: any) => ({
 		from: new Date(date.from.split('-').join(', ')),
 		to: new Date(date.to.split('-').join(', ')),
 	}));
 
 	let footer = <p>Please pick the first day.</p>;
+
 	if (range?.from) {
 		if (!range.to) {
 			footer = <p>{format(range.from, 'PPP')}</p>;
@@ -51,6 +56,25 @@ const Resource = ({ resource, reservations }: Props) => {
 			);
 		}
 	}
+
+	const handleOnSubmit = (e: any) => {
+		e.preventDefault();
+		const formData = {
+			resource: _id,
+			teacher: {
+				name: name,
+				email: email,
+			},
+			date: {
+				to: format(range.to, 'yyyy, MM, dd'),
+				from: format(range.from, 'yyyy, MM, dd'),
+			},
+		};
+		fetch('/api/reservation', {
+			method: 'post',
+			body: JSON.stringify(formData),
+		});
+	};
 
 	return (
 		<main className='p-4 max-w-4xl mx-auto'>
@@ -84,7 +108,7 @@ const Resource = ({ resource, reservations }: Props) => {
 							);
 						})}
 					</div>
-					<p className='mb-10'>Available Now</p>
+					{/* <p className='mb-10'>Available Now</p> */}
 				</div>
 				<div>
 					<DayPicker
@@ -94,14 +118,24 @@ const Resource = ({ resource, reservations }: Props) => {
 						onSelect={setRange}
 						disabled={disabledDays}
 					/>
-					<form className='space-y-3'>
+					<form className='space-y-3' onSubmit={handleOnSubmit}>
 						<label htmlFor='name' className='flex flex-col'>
 							<span>Name</span>
-							<input type='text' name='name' />
+							<input
+								type='text'
+								name='name'
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+							/>
 						</label>
 						<label htmlFor='email' className='flex flex-col'>
 							<span>Email</span>
-							<input type='text' name='email' />
+							<input
+								type='text'
+								name='email'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
 						</label>
 						<input
 							type='submit'
