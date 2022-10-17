@@ -1,7 +1,7 @@
-import { getClient } from '../lib/sanity.server';
+import { getClient } from '../../lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { getReservations } from '../lib/queries';
-import { SearchBar } from '../components/SearchBar';
+import { getReservations } from '../../lib/queries';
+import { SearchBar } from '../../components/SearchBar';
 import { HiChevronLeft } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import Fuse from 'fuse.js';
