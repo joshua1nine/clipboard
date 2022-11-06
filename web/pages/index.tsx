@@ -10,6 +10,7 @@ import Fuse from 'fuse.js';
 import { useState } from 'react';
 import { applyFilters } from '../lib/applyFilters';
 import { FilterOverlay } from '../components/FilterOverlay';
+import Header from '../components/Header';
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const resources = await getClient().fetch(getAllResources);
@@ -24,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 interface Props {
-	resources: any;
+	resources: Resource[];
 	tags: any;
 }
 
@@ -53,14 +54,7 @@ const Home = ({ resources, tags }: Props) => {
 	return (
 		<div className='page'>
 			<main className='max-w-4xl mx-auto relative'>
-				<header className='p-3 mb-1 flex justify-between items-center'>
-					<h1 className='font-bold text-3xl'>Clipboard</h1>
-					<Link href='/reservations'>
-						<a>
-							<HiCog size={30} className='text-blue' />
-						</a>
-					</Link>
-				</header>
+				<Header title='Clipboard' />
 				<SearchBar
 					query={query}
 					handleOnSearch={handleOnSearch}

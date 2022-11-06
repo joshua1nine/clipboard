@@ -1,24 +1,28 @@
 import { getClient } from '../../lib/sanity.server';
-import { GetServerSideProps } from 'next';
 import { getReservations } from '../../lib/queries';
 import { SearchBar } from '../../components/SearchBar';
 import { HiChevronLeft } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import Header from '../../components/Header';
+import BackBtn from '../../components/BackBtn';
 
-export const getServerSideProps: GetServerSideProps = async () => {
-	const reservations = await getClient().fetch(getReservations);
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps() {
+		const reservations = await getClient().fetch(getReservations);
 
-	return {
-		props: {
-			reservations,
-		},
-	};
-};
+		return {
+			props: {
+				reservations,
+			},
+		};
+	},
+});
 
 interface Props {
-	reservations: any;
+	reservations: Reservation[];
 }
 
 const Reservations = ({ reservations }: Props) => {
@@ -40,16 +44,9 @@ const Reservations = ({ reservations }: Props) => {
 	};
 	return (
 		<div className='page'>
+			<BackBtn />
+			<Header title='Reservations' />
 			<main className='max-w-4xl mx-auto'>
-				<header className='p-3 mb-1'>
-					<div className='flex items-center space-x-2 mb-3'>
-						<HiChevronLeft />
-						<button type='button' onClick={() => router.back()}>
-							Back
-						</button>
-					</div>
-					<h1 className='font-bold text-3xl'>Reservations</h1>
-				</header>
 				<SearchBar
 					query={query}
 					handleOnSearch={handleOnSearch}

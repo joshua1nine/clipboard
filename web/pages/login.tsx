@@ -1,12 +1,15 @@
 import React from 'react';
-
+import Header from '../components/Header';
+import LoginBtn from '../components/LoginBtn';
 type Props = {};
 
 const Login = (props: Props) => {
 	return (
-		<div>
-			<h1>Login</h1>
-			<a href='/api/auth/login'>Login</a>
+		<div className='page'>
+			<main className='max-w-4xl mx-auto relative'>
+				<Header title='Login' />
+				<LoginBtn />
+			</main>
 		</div>
 	);
 };
