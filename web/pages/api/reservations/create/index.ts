@@ -19,30 +19,15 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Data>
 ) {
-	const method = req.method;
-
 	try {
+		const method = req.method;
+		const body = JSON.parse(req.body);
+
 		switch (method) {
 			// Create Reservation
 			case 'POST':
-				console.log(typeof req.body);
-
-				if (req?.body != undefined || req?.body != '') {
-					const body = JSON.parse(req?.body);
-					client
-						.create(body?.reservation)
-						.then((res) => {
-							console.log(`created ${res._id}`);
-						})
-						.catch((err) => {
-							console.error('Create failed : ', err.message);
-						});
-					res.status(200).end(`Reservation created`);
-				} else {
-					res.status(404).send({
-						message: `Please provide a reservation to submit`,
-					});
-				}
+				const response = await client.create(body);
+				res.status(200).end(`Reservation created: ${response._id}`);
 				break;
 
 			default:
@@ -50,7 +35,23 @@ export default async function handler(
 				res.status(405).end(`Method ${method} Not Allowed`);
 				break;
 		}
-	} catch (err) {
+	} catch (err: any) {
+		if (err instanceof SyntaxError) {
+			res.status(400).json({
+				message:
+					'SyntaxError make sure you include the reservation object in the body of the request.',
+				error: err.message,
+			});
+		} else if (err.name === 'ClientError') {
+			res.status(400).json({
+				message: 'Make sure the shape of the reservation object is correct.',
+				error: err.message,
+			});
+		} else {
+			res.status(400).json({
+				message: err.message,
+			});
+		}
 		res.status(500).json({ error: `failed to load data: ${err}` });
 	}
 }

@@ -24,7 +24,6 @@ export default async function handler(
 
 	try {
 		switch (method) {
-			// Get Reservation
 			// api/reservations/id
 			case 'GET':
 				const reservation: any = await client.getDocument(id);

@@ -24,7 +24,7 @@ export default async function handler(
 
 	try {
 		switch (method) {
-			// Get Reservations
+			// Get All Reservations
 			case 'GET':
 				const data = await getClient().fetch(
 					groq`*[_type == 'reservation']{
@@ -38,30 +38,8 @@ export default async function handler(
 				res.status(200).json({ data });
 				break;
 
-			// Create Reservation
-			case 'POST':
-				console.log(typeof req.body);
-
-				if (req?.body != undefined || req?.body != '') {
-					const body = JSON.parse(req?.body);
-					client
-						.create(body?.reservation)
-						.then((res) => {
-							console.log(`created ${res._id}`);
-						})
-						.catch((err) => {
-							console.error('Create failed : ', err.message);
-						});
-					res.status(200).end(`Reservation created`);
-				} else {
-					res.status(404).send({
-						message: `Please provide a reservation to submit`,
-					});
-				}
-				break;
-
 			default:
-				res.setHeader('Allow', ['GET', 'POST']);
+				res.setHeader('Allow', ['GET']);
 				res.status(405).end(`Method ${method} Not Allowed`);
 				break;
 		}
