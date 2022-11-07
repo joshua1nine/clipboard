@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/Header';
-import LoginBtn from '../components/LoginBtn';
+import Header from '@components/Header';
+import LoginBtn from '@components/LoginBtn';
 type Props = {};
 
 const Login = (props: Props) => {

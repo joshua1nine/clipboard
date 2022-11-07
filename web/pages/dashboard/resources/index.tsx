@@ -2,13 +2,13 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Fuse from 'fuse.js';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import BackBtn from '../../../components/BackBtn';
-import { FilterOverlay } from '../../../components/FilterOverlay';
-import Header from '../../../components/Header';
-import { SearchBar } from '../../../components/SearchBar';
-import { applyFilters } from '../../../lib/applyFilters';
-import { getAllResources, getAllTags } from '../../../lib/queries';
-import { getClient } from '../../../lib/sanity.server';
+import BackBtn from '@components/BackBtn';
+import { FilterOverlay } from '@components/FilterOverlay';
+import Header from '@components/Header';
+import { SearchBar } from '@components/SearchBar';
+import { applyFilters } from '@lib/applyFilters';
+import { getAllResources, getAllTags } from '@lib/queries';
+import { getClient } from '@lib/sanity.server';
 
 type Props = {
 	resources: Resource[];

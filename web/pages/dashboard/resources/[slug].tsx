@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import { getResource } from '../../../lib/queries';
-import { getClient } from '../../../lib/sanity.server';
+import { getResource } from '@lib/queries';
+import { getClient } from '@lib/sanity.server';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { slug } = context?.query;

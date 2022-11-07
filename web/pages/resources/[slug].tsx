@@ -1,7 +1,7 @@
-import { getClient } from '../../lib/sanity.server';
+import { getClient } from '@lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { findReservations, getResource } from '../../lib/queries';
-import { urlFor } from '../../lib/sanity';
+import { findReservations, getResource } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
 import Image from 'next/image';
 import { HiChevronLeft } from 'react-icons/hi';
 import { useRouter } from 'next/router';

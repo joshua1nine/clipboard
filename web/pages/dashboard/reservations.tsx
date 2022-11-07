@@ -1,13 +1,11 @@
-import { getClient } from '../../lib/sanity.server';
 import { getReservations } from '../../lib/queries';
 import { SearchBar } from '../../components/SearchBar';
-import { HiChevronLeft } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import Header from '../../components/Header';
-import BackBtn from '../../components/BackBtn';
+import Header from '@components/Header';
+import BackBtn from '@components/BackBtn';
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps() {

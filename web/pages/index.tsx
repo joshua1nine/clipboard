@@ -1,16 +1,14 @@
-import { Card } from '../components/Card';
-import { getClient } from '../lib/sanity.server';
+import { Card } from '@components/Card';
+import { getClient } from '@lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { getAllResources, getAllTags } from '../lib/queries';
-import { urlFor } from '../lib/sanity';
-import { SearchBar } from '../components/SearchBar';
-import { HiCog } from 'react-icons/hi';
-import Link from 'next/link';
+import { getAllResources, getAllTags } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
+import { SearchBar } from '@components/SearchBar';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
-import { applyFilters } from '../lib/applyFilters';
-import { FilterOverlay } from '../components/FilterOverlay';
-import Header from '../components/Header';
+import { applyFilters } from '@lib/applyFilters';
+import { FilterOverlay } from '@components/FilterOverlay';
+import Header from '@components/Header';
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const resources = await getClient().fetch(getAllResources);

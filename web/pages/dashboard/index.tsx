@@ -1,7 +1,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Link from 'next/link';
 import React from 'react';
-import Header from '../../components/Header';
+import Header from '@components/Header';
 
 export const getServerSideProps = withPageAuthRequired();
 
