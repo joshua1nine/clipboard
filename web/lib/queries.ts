@@ -27,10 +27,8 @@ export const findReservations = groq`*[_type == 'reservation' && resource->_id =
   dates,
 }`;
 
-export const getReservations = groq`*[_type == 'reservation']{
-  dates,
-	'resource': resource->title,
-	'type': resource->type,
-  teacher,
-  _id
-}`;
+export async function getReservations() {
+	const response = await fetch('http://localhost:3000/api/reservations');
+	const result = await response.json();
+	return result.data;
+}

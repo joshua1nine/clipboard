@@ -11,7 +11,7 @@ import BackBtn from '../../components/BackBtn';
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps() {
-		const reservations = await getClient().fetch(getReservations);
+		const reservations = await getReservations();
 
 		return {
 			props: {
