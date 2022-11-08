@@ -1,34 +1,60 @@
-import { groq } from 'next-sanity';
-export const getAllResources = groq`*[_type == 'resource']{
-	_id,
-	type,
-	mainImage,
-	title,
-	'slug': slug.current,
-	'tags': tags[]->tag
-}`;
+// GET All Tags
+export async function getTags() {
+	const response = await fetch('http://localhost:3000/api/tags');
+	const result = await response.json();
+	return result.data;
+}
 
-export const getAllTags = groq`*[_type == 'tags']{
-  _id,
-  tag
-}`;
+// CREATE TAG
 
-export const getResource = groq`*[_type == 'resource' && slug.current == $slug][0]{
-  title,
-  mainImage,
-  type,
-  quantity,
-  'tags': tags[]->tag,
-  _id,
-	reservations
-}`;
+// DELETE TAG
 
-export const findReservations = groq`*[_type == 'reservation' && resource->_id == $resource_id][0]{
-  dates,
-}`;
+// GET All Resources
+export async function getResources() {
+	const response = await fetch('http://localhost:3000/api/resources');
+	const result = await response.json();
+	return result.data;
+}
 
+// GET Single Resource
+export async function getResource(slug: string) {
+	const response = await fetch(`http://localhost:3000/api/resources/${slug}`);
+	const result = await response.json();
+	return result.data;
+}
+
+// GET A Resource's Current Reservations
+export async function getResourceReservations(id: string) {
+	const response = await fetch(
+		`http://localhost:3000/api/resources/reservations/${id}`
+	);
+	const result = await response.json();
+	if (response.status == 404) {
+		return null;
+	}
+	return result.data;
+}
+
+// CREATE Resource
+
+// UPDATE Resource
+
+// DELETE Resource
+
+// GET All Reservations
 export async function getReservations() {
 	const response = await fetch('http://localhost:3000/api/reservations');
 	const result = await response.json();
 	return result.data;
 }
+
+// GET Single Reservation
+export async function getReservation(id: string) {
+	const response = await fetch(`http://localhost:3000/api/reservations/${id}`);
+	const result = await response.json();
+	return result.data;
+}
+
+// CREATE Reservation
+
+// DELETE Reservation

@@ -1,6 +1,6 @@
 import { getClient } from '@lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { findReservations, getResource } from '@lib/queries';
+import { getResource, getResourceReservations } from '@lib/queries';
 import { urlFor } from '@lib/sanity';
 import Image from 'next/image';
 import { HiChevronLeft } from 'react-icons/hi';
@@ -10,11 +10,11 @@ import { DayPicker } from 'react-day-picker';
 import { useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const { slug, id } = context?.query;
-	const resource = await getClient().fetch(getResource, { slug: slug });
-	const reservations = await getClient().fetch(findReservations, {
-		resource_id: id,
-	});
+	const slug: any = context?.query?.slug;
+	const id: any = context?.query?.id;
+	// const resource = await getClient().fetch(getResource, { slug: slug });
+	const resource = await getResource(slug);
+	const reservations = await getResourceReservations(id);
 
 	return {
 		props: {

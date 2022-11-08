@@ -7,32 +7,45 @@ const client = getClient().config({
 	useCdn: false,
 });
 
-const query = `*[_type == 'reservation']{
-						dates,
-						'resource': resource->title,
-						'type': resource->type,
-						teacher,
-						_id
-					}`;
+const query = `*[_type == 'resource' && slug.current == $slug][0]{
+  title,
+  mainImage,
+  type,
+  quantity,
+  'tags': tags[]->tag,
+  _id,
+	reservations
+}`;
 
 interface Data {
 	data?: Reservation[];
 	error?: string;
 	method?: string;
+	endpoint?: string;
+	message?: string;
 }
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Data>
 ) {
-	const method = req.method;
+	const method = req?.method;
+	const slug: any = req?.query?.slug;
 
 	try {
 		switch (method) {
-			// Get All Reservations
+			// api/resources/slug
 			case 'GET':
-				const data = await client.fetch(query);
-				res.status(200).json({ data });
+				const resource: any = await client.fetch(query, {
+					slug: slug,
+				});
+				if (resource != undefined) {
+					res.status(200).json({ data: resource });
+				} else {
+					res
+						.status(404)
+						.json({ message: `No resource was found with the id of ${slug}` });
+				}
 				break;
 
 			default:

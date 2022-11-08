@@ -7,18 +7,17 @@ const client = getClient().config({
 	useCdn: false,
 });
 
-const query = `*[_type == 'reservation']{
-						dates,
-						'resource': resource->title,
-						'type': resource->type,
-						teacher,
-						_id
-					}`;
+const query = `*[_type == 'tags']{
+  _id,
+  tag
+}`;
 
 interface Data {
 	data?: Reservation[];
 	error?: string;
 	method?: string;
+	endpoint?: string;
+	message?: string;
 }
 
 export default async function handler(

@@ -1,7 +1,7 @@
 import { Card } from '@components/Card';
 import { getClient } from '@lib/sanity.server';
 import { GetServerSideProps } from 'next';
-import { getAllResources, getAllTags } from '@lib/queries';
+import { getTags, getResources } from '@lib/queries';
 import { urlFor } from '@lib/sanity';
 import { SearchBar } from '@components/SearchBar';
 import Fuse from 'fuse.js';
@@ -11,8 +11,8 @@ import { FilterOverlay } from '@components/FilterOverlay';
 import Header from '@components/Header';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-	const resources = await getClient().fetch(getAllResources);
-	const tags = await getClient().fetch(getAllTags);
+	const resources = await getResources();
+	const tags = await getTags();
 
 	return {
 		props: {
