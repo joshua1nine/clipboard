@@ -42,29 +42,5 @@ export default {
 			title: 'Quantity',
 			type: 'number',
 		},
-		{
-			name: 'reservations',
-			title: 'Reservations',
-			type: 'array',
-			of: [
-				{
-					name: 'dates',
-					title: 'Reservation Dates',
-					type: 'object',
-					fields: [
-						{
-							name: 'from',
-							type: 'date',
-							options: { dateFormat: 'YYYY, MM, DD' },
-						},
-						{
-							name: 'to',
-							type: 'date',
-							options: { dateFormat: 'YYYY, MM, DD' },
-						},
-					],
-				},
-			],
-		},
 	],
 };
