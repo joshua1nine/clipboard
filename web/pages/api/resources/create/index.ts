@@ -8,17 +8,9 @@ const client = getClient().config({
 	useCdn: false,
 });
 
-interface Data {
-	data?: Reservation[];
-	error?: string;
-	method?: string;
-	endpoint?: string;
-	message?: string;
-}
-
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Data>
+	res: NextApiResponse
 ) {
 	try {
 		const method = req.method;
@@ -26,17 +18,26 @@ export default async function handler(
 		switch (method) {
 			// Create Resource
 			case 'POST':
+				const stream: any = createReadStream(
+					'/Users/jmichael/Repos/Demos/clipboard/web/public/test-image.png'
+				);
+
 				// Upload an image file from the file system
-				// const image = await client.assets.upload(
-				// 	'image',
-				// 	createReadStream('myImage.jpg'),
-				// 	{
-				// 		filename: 'myImage.jpg',
-				// 	}
-				// );
+				const asset = await client.assets.upload('image', stream, {
+					filename: 'myImage.jpg',
+				});
+
+				const body = JSON.parse(req.body);
+				body.mainImage = {
+					_type: 'image',
+					asset: {
+						_ref: asset._id,
+						_type: 'reference',
+					},
+				};
 
 				// Create Resource
-				const response = await client.create(JSON.parse(req.body));
+				const response = await client.create(body);
 				res.status(200).end(`Resource created: ${response._id}`);
 				break;
 

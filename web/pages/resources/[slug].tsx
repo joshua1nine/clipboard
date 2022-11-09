@@ -12,7 +12,6 @@ import { useState } from 'react';
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const slug: any = context?.query?.slug;
 	const id: any = context?.query?.id;
-	// const resource = await getClient().fetch(getResource, { slug: slug });
 	const resource = await getResource(slug);
 	const reservations = await getResourceReservations(id);
 
