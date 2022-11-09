@@ -18,7 +18,9 @@ export async function getResources() {
 
 // GET Single Resource
 export async function getResource(slug: string) {
-	const response = await fetch(`http://localhost:3000/api/resources/${slug}`);
+	const response = await fetch(
+		`http://localhost:3000/api/resources/get/${slug}`
+	);
 	const result = await response.json();
 	return result.data;
 }
@@ -50,7 +52,9 @@ export async function getReservations() {
 
 // GET Single Reservation
 export async function getReservation(id: string) {
-	const response = await fetch(`http://localhost:3000/api/reservations/${id}`);
+	const response = await fetch(
+		`http://localhost:3000/api/reservations/get/${id}`
+	);
 	const result = await response.json();
 	return result.data;
 }

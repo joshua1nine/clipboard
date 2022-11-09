@@ -1,4 +1,3 @@
-import { getClient } from '@lib/sanity.server';
 import { GetServerSideProps } from 'next';
 import { getResource, getResourceReservations } from '@lib/queries';
 import { urlFor } from '@lib/sanity';
